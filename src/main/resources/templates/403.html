@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template}">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Comptes </title>
+    <style>
+        .margin{
+            margin-top: 2%;
+            margin-right: 5%;
+            width:45%
+        }
+    </style>
+</head>
+<body style="font-family: Montserrat">
+ <div layout:fragment="content">
+ <div class="w3-container">
+
+     <div class=" w3-border-gray w3-round-large w3-border w3-left " style="width: 50%;margin:5% " >
+         <header class="w3-container  w3-indigo" style="border-radius: 8px  8px 0  0 ">
+             <h5>Problème d'Autorisation  </h5>
+         </header>
+         <div class="w3-container w3-text-red" style="padding: 2%">
+            vous n'avez pas le droit d'accéder à cette ressource </div>
+     </div>
+
+
+
+     </div>
+    </div>
+
+</body>
+</html>

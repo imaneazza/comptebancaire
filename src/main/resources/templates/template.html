@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ma Banque </title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css"
+                                            th:href="@{/css/fontcss.css}">
+</head>
+<body>
+<header>
+    <div class="w3-container">
+        <div class="w3-bar w3-light-gray"   >
+            <a th:href="@{/operations}" class="w3-button   w3-hover-none" >OPERATIONS </a>
+            <a th:href="@{/login?logout}" class="w3-button w3-right   w3-hover-none" >DECONNEXION </a>
+
+
+        </div>
+    </div>
+</header>
+<section layout:fragment="content">
+
+</section>
+<footer>
+    <div class="w3-container ">
+        <small> @L'adresse de la Banque </small>
+    </div>
+</footer>
+</body>
+</html>
