@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorate="~{template}">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Comptes </title>
+    <style>
+        .margin{
+            margin-top: 2%;
+            margin-right: 5%;
+            width:45%
+        }
+    </style>
+</head>
+<body style="font-family: Montserrat">
+ <div layout:fragment="content">
+ <div class="w3-container">
+
+     <div class=" w3-border-gray w3-round-large w3-border w3-left  margin" >
+         <header class="w3-container  w3-indigo" style="border-radius: 8px  8px 0  0 ">
+             <h5>Consultation d'un  Compte </h5>
+         </header>
+
+         <div class="w3-container" style="padding: 2%">
+             <form th:action="@{/consultercompte}" method="get">
+                 <div>
+                     <span class="w3-third" style="text-align:right;font-size: 18px;font-weight: bolder"> code Compte : </span>
+                     <input th:value="${codeCompte}" type="text" class="w3-input w3-half w3-border" style="margin-left:1%;margin-right: 1%" name="codeCompte">
+                     <button type="submit" class="w3-button w3-indigo w3-rest"> Okey </button>
+                 </div>
+             </form>
+             <div class="w3-text-red w3-row" th:if="${exception}" th:text="${exception.message}"></div>
+         </div>
+     </div>
+
+
+     <div class=" w3-border-gray w3-round-large w3-border w3-left  margin" th:if="${compte}"
+     sec:authorize="hasRole('ROLE_ADMIN')">
+            <header class="w3-container  w3-indigo" style="border-radius: 8px  8px 0  0 ">
+                <h5>Opérations sur le  Compte</h5>
+            </header>
+
+            <div class="w3-container">
+                <form th:action="@{/saveOperation}" method="post">
+                    <div>
+                        <label > Compte</label>
+                        <input type="hidden" name="codeCompte"
+                               th:value="${codeCompte}">
+                        <label th:text="${codeCompte}"></label>
+                    </div>
+                    <div>
+
+                        <input onchange="document.getElementById('forVirement').style.display='none'" checked="checked" type="radio" name="typeOperation" value="VERS">
+                        <label > VERSEMENT</label>
+                        <input type="radio" name="typeOperation" value="RETR"
+                               onchange="document.getElementById('forVirement').style.display='none'">
+                        <label > RETRAIT</label>
+                    <input type="radio" name="typeOperation" value="VIR"
+                             onchange="document.getElementById('forVirement').style.display='block'">
+                        <label > VIREMENT</label>
+                    </div>
+                    <div id="forVirement" style="display: none">
+                        <label  >VERS : </label>
+                        <input type="text" name="codeCompte2">
+                    </div>
+                    <div>
+                        <label >Montant</label>
+                        <input type="text" name="montant">
+
+                    </div>
+                    <div class="w3-text-red"th:text="${#httpServletRequest.getParameter('error')}"></div>
+
+                    <button type="submit" class="w3-button"> valider</button>
+                </form>
+
+            </div>
+
+        </div>
+
+
+     <div class=" w3-border-gray w3-round-large w3-border w3-left  margin"  th:if="${compte}">
+         <header class="w3-container  w3-indigo" style="border-radius: 8px  8px 0  0 ">
+             <h5>Information d'un Compte</h5>
+         </header>
+
+         <div class="w3-container " >
+             <div  class="w3-container  w3-padding" >
+                 <label > Client : </label>
+                 <label th:text="${compte.client.nom}"> </label>
+             </div>
+             <div  class="w3-container  w3-padding" >
+                 <label > code : </label>
+                 <label th:text="${compte.codeCompte}"> </label>
+             </div>
+             <div  class="w3-container w3-padding">
+                 <label > Solde : </label>
+                 <label th:text="${compte.solde}"> </label>
+             </div>
+             <div  class="w3-container w3-padding ">
+                 <label > Date de Création : </label>
+                 <label th:text="${compte.dateCreation}"> </label>
+             </div>
+             <div  class="w3-container w3-padding" >
+                 <label > Type : </label>
+                 <label th:text="${compte.class.simpleName}"> </label>
+             </div>
+             <div  class="w3-container w3-padding" th:if="${compte.class.simpleName=='CompteCourant'}" >
+                 <label > Découvert : </label>
+                 <label th:text="${compte.decouvert}"> </label>
+             </div>
+
+             <div  class="w3-container w3-padding" th:if="${compte.class.simpleName=='CompteEpargne'}" >
+                 <label > TAUX : </label>
+                 <label th:text="${compte.taux}"> </label>
+             </div>
+         </div>
+
+     </div>
+
+
+     <div class=" w3-border-gray w3-round-large w3-border w3-left  margin" th:if="${compte}">
+         <header class="w3-container  w3-indigo" style="border-radius: 8px  8px 0  0 ">
+             <h5>Liste des Opérations</h5>
+         </header>
+
+         <div class="w3-container w3-responsive">
+           <table class="w3-table w3-striped w3-bordered" style="width: 100%">
+               <tr>
+                   <th>
+                       NUM
+                   </th>
+                   <th>
+                       DATE
+                   </th>
+                   <th>
+                       TYPE
+                   </th>
+                   <th>
+                       MONTANT
+                   </th>
+               </tr>
+               <tr th:each="o:${listeoperations}">
+                   <td th:text="${o.numero}"></td>
+                   <td th:text="${o.dateOperation}"></td>
+                   <td th:text="${o.class.simpleName}"></td>
+                   <td th:text="${o.montant}"></td>
+
+
+               </tr>
+
+           </table>
+             <div class="w3-container" >
+                 <ul class="w3-bar">
+                     <a th:each="p,statut:${pages}"  th:text="${statut.index}" th:href="@{/consultercompte(codeCompte=${codeCompte} ,
+                          page=${statut.index})}" class="w3-button">
+
+                 </ul>
+             </div>
+              </div>
+
+     </div>
+    </div>
+
+</div>
+</body>
+</html>

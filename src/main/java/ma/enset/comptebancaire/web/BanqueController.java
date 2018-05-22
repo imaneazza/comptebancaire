@@ -1,6 +1,6 @@
 package ma.enset.comptebancaire.web;
 
-import ma.enset.comptebancaire.dao.IBanqueMetier;
+import ma.enset.comptebancaire.services.IBanqueMetier;
 import ma.enset.comptebancaire.entities.Compte;
 import ma.enset.comptebancaire.entities.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class BanqueController {
     private IBanqueMetier banqueMetier;
     @RequestMapping("/operations" )
     public String index(){
-        return "comptes";
+        return "operations";
     }
     @RequestMapping("/consultercompte")
     public String consulter(Model model , String codeCompte ,
@@ -35,7 +35,7 @@ public class BanqueController {
             model.addAttribute("exception",e);
         }
 
-        return "comptes";
+        return "operations";
     }
     @RequestMapping(value = "/saveOperation" ,method = RequestMethod.POST)
 public String saveOperation(Model model, String typeOperation,String codeCompte

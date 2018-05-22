@@ -1,4 +1,4 @@
-package ma.enset.comptebancaire.dao;
+package ma.enset.comptebancaire.services;
 
 import ma.enset.comptebancaire.entities.Compte;
 import ma.enset.comptebancaire.entities.Operation;

@@ -1,5 +1,7 @@
-package ma.enset.comptebancaire.dao;
+package ma.enset.comptebancaire.services;
 
+import ma.enset.comptebancaire.dao.CompteRepository;
+import ma.enset.comptebancaire.dao.Operationrepository;
 import ma.enset.comptebancaire.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
